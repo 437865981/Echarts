@@ -1,0 +1,47 @@
+<!doctype html>
+<html lang="en">
+<head>
+    <title>Document</title>
+    <!--引入js-->
+    <script src="echarts.min.js"></script>
+</head>
+<body>
+ <!--第二步：为Echarts准备Dom-->
+<div id="main" style="height:600px;width:900px;"/>
+<!--第三步：初始化DOM-->
+<script type="text/javascript">
+    var myChart=echarts.init(document.getElementById('main'));
+    var option={
+        //标题
+        title:{
+            text:'Echarts入门实例'
+        },
+
+        //图例
+        legend:{
+            data:['销量']
+        },
+        //x轴
+        xAxis : {
+            data: ["衬衫", "羊毛衫", "雪纺衫", "裤子", "高跟鞋", "袜子"]
+        },
+                //y轴
+        yAxis:{
+
+        },
+        //数据
+        series:[
+            {
+                name:'销量',
+				type:'bar',
+                data:[52,21,15,15,60,6]
+    }
+    ]
+
+    },//end of option
+
+    //指定配置项，绘图
+    myChart.s   etOption(option);
+</script>
+</body>
+</html>

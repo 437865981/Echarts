@@ -1,0 +1,85 @@
+
+<!--单文件引入四大步
+1为ECharts准备一个具备大小（宽高）的Dom（当然可以是动态生成的）
+2通过script标签引入echarts主文件
+3为模块加载器配置echarts的路径，从当前页面链接到echarts.js所在目录，见上述说明
+4动态加载echarts及所需图表然后在回调函数中开始使用（容我罗嗦一句，当你确保同一页面已经加载过echarts，再使用时直接require('echarts').init(dom)就行）
+
+-->
+<!doctype html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="Generator" content="EditPlus®">
+    <meta name="Author" content="">
+    <meta name="Keywords" content="">
+    <meta name="Description" content="">
+    <title>Document</title>
+</head>
+<body>
+<!--1.为Ecahrts提供空间(具有大小的DOM)-->
+<div id="main" style="height:400px"></div>
+<!--2.引入Echart单文件-->
+<script src="http://echarts.baidu.com/build/dist/echarts.js"></script>
+
+<!--3.路径配置-->
+<script type="text/javascript">
+    require.config({
+        paths: {
+            echarts: 'http://echarts.baidu.com/build/dist'
+        }
+    });
+    <!--4.动态加载echarts和所需图表，回调函数中可以初始化图表并驱动图表的生成-->
+    require(
+            [
+                'echarts',
+                'echarts/chart/bar' // 使用柱状图就加载bar模块，按需加载
+                //'echarts/chart/pie'
+                //'echarts/chart/line'
+            ],
+            function (ec) {
+                // 基于准备好的dom，初始化echarts图表
+                var myChart = ec.init(document.getElementById('main'));
+
+                var option = {
+                    tooltip: {
+                        show: true
+                    },
+                    legend: {
+                        data:['销量','fx']
+                    },
+                    xAxis : [
+                        {
+                            type : 'category',
+                            data : ["衬衫","羊毛衫","雪纺衫","裤子","高跟鞋","袜子"]
+                        }
+                    ],
+                    yAxis : [
+                        {
+                            type : 'value'
+
+                        }
+                    ],
+                    series : [
+                        {
+                            "name":"销量",
+                            "type":"bar",
+                            "data":[5, 20, 40, 10, 10, 20]
+                        },
+                        {
+                            "name":"fx",
+                            "type":"line",
+                            "data":[1,5,5,6,8,4]
+                        }
+
+                    ]
+                };//end of option
+
+                // 为echarts对象加载数据
+                myChart.setOption(option);
+            }
+    );
+
+</script>
+</body>
+</html>
